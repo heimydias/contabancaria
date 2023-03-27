@@ -3,6 +3,8 @@ package conta_bancaria;
 import java.util.Scanner;
 
 import conta_bancaria.model.Conta;
+import conta_bancaria.model.Conta_Corrente;
+import conta_bancaria.model.Conta_Poupanca;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -22,21 +24,18 @@ public class Menu {
 		float limite;
 		float valor;
 		
-		Conta c1 = new Conta(1, 123, 1, "Jeniffer Souza", 100000.00f);
-		
+		Conta_Corrente c1 = new Conta_Corrente(1, 123, 1, "Jeniffer Souza", 100000.00f, 1000.00f);
 		c1.visualizar();
 		
-		System.out.println("Saldo da conta: " + c1.getSaldo());
-		
-		c1.setTitular("Jeniffer Souza Ribeiro");
-		
+		c1.sacar(1000);
 		c1.visualizar();
 		
-		c1.sacar(200000.0f);
+		c1.depositar(2000);
 		c1.visualizar();
 		
-		c1.depositar(2000.0f);
-		c1.visualizar();
+		Conta_Poupanca c2 = new Conta_Poupanca(1, 123, 1, "Julia Maria", 100000.00f, 20);
+		c2.visualizar();
+		
 		
 		while (true) {
 			
