@@ -27,12 +27,6 @@ public class Menu {
 		Conta_Corrente c1 = new Conta_Corrente(1, 123, 1, "Jeniffer Souza", 100000.00f, 1000.00f);
 		c1.visualizar();
 		
-		c1.sacar(1000);
-		c1.visualizar();
-		
-		c1.depositar(2000);
-		c1.visualizar();
-		
 		Conta_Poupanca c2 = new Conta_Poupanca(1, 123, 1, "Julia Maria", 100000.00f, 20);
 		c2.visualizar();
 		
