@@ -1,7 +1,10 @@
 package conta_bancaria;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import conta_bancaria.controller.Controller;
 import conta_bancaria.model.Conta;
 import conta_bancaria.model.Conta_Corrente;
 import conta_bancaria.model.Conta_Poupanca;
@@ -23,6 +26,8 @@ public class Menu {
 		float saldo;
 		float limite;
 		float valor;
+		
+		Controller contas = new Controller();
 		
 		Conta_Corrente c1 = new Conta_Corrente(1, 123, 1, "Jeniffer Souza", 100000.00f, 1000.00f);
 		c1.visualizar();
@@ -53,7 +58,13 @@ public class Menu {
 			System.out.println("Entre com a opção desejada:                         ");
 			System.out.println("                                                    " + Cores.TEXT_RESET);
 			
+			try {
 			opcao = leia.nextInt();
+			}catch(InputMismatchException e) {
+				System.out.println("Digite valores inteiros!");
+				leia.nextLine();
+				opcao = 0;
+			}
 			
 			if (opcao == 9) {
 				System.out.println("\nDevGirls Bank - O seu Futuro começa aqui!");
@@ -84,21 +95,29 @@ public class Menu {
 	                case 1 -> {
 	                    System.out.println("Digite o Limite de Crédito (R$): ");
 	                    limite = leia.nextFloat();
+	                    
+	                    contas.Cadastrar(new Conta_Corrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
 	                }
 	                case 2 -> {
 	                    System.out.println("Digite o dia do Aniversario da Conta: ");
 	                    aniversario = leia.nextInt();
+	                    
+	                    contas.Cadastrar(new Conta_Poupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
 	                }
 	                }
-					
+	                keyPress();
 				}
 				case 2 -> {
 					System.out.println("Listar todas as Contas\n\n");
+					contas.listartodas();
+					keyPress();
 				}
 				case 3 -> {
 					System.out.println("Buscar Conta por Numero\n\n");
 					System.out.println("Digite o número da conta: ");
 	                numero = leia.nextInt();
+	                contas.procurarPorNumero(numero);
+	                keyPress();
 				}
 				case 4 -> {
 					System.out.println("Atualizar Dados da Conta\n\n");
@@ -120,7 +139,6 @@ public class Menu {
 	                case 1 -> {
 	                    System.out.println("Digite o Limite de Crédito (R$): ");
 	                    limite = leia.nextFloat();
-
 	                }
 	                case 2 -> {
 	                    System.out.println("Digite o dia do Aniversario da Conta: ");
@@ -131,12 +149,13 @@ public class Menu {
 	                    System.out.println("Tipo de conta inválido!");
 	                }
 	                }
-
+	                keyPress();
 				}
 				case 5 -> {
 					System.out.println("Apagar Conta\n\n");
 					System.out.println("Digite o número da conta: ");
 	                numero = leia.nextInt();
+	                keyPress();
 				}
 				case 6 -> {
 					System.out.println("Sacar\n\n");
@@ -145,6 +164,7 @@ public class Menu {
 	                
 	                System.out.println("Digite o valor do Saque: ");
 	                valor = leia.nextFloat();
+	                keyPress();
 				}
 				case 7 -> {
 					System.out.println("Depositar\n\n");
@@ -153,6 +173,7 @@ public class Menu {
 	                
 	                System.out.println("Digite o valor do Depósito: ");
 	                valor = leia.nextFloat();
+	                keyPress();
 				}
 				case 8 -> {
 					System.out.println("Transferir valores entre Contas\n\n");
@@ -165,9 +186,12 @@ public class Menu {
 	                    System.out.println("Digite o Valor da Transferência (R$): ");
 	                    valor = leia.nextFloat();
 	                } while (valor <= 0);
+	                keyPress();
 				}
-				default -> System.out.println("\nOpção Inválida!\n");
+				default -> System.out.println("\nOpção Inválida!\n"); 
+				
 			}
+			keyPress();
 		}
 	}
 	
@@ -176,5 +200,15 @@ public class Menu {
 		System.out.println("Heimy Dias - heimysantana@hotmail.com");
 		System.out.println("github.com/heimydias");
 		System.out.println("*********************************************************");
+	}
+	
+	public static void keyPress() {
+		
+		try {
+			System.out.println(Cores.TEXT_RESET + "Pressione a tecla enter para continuar...");
+			System.in.read();
+		}catch(IOException e) {
+			System.out.println("Erro de digitação!");
+		}
 	}
 }
